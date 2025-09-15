@@ -1,3 +1,47 @@
+
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-main",
+      "description": "A mysterious door slightly ajar, with light peeking through.",
+      "imageUrl": "https://picsum.photos/seed/door/1920/1080",
+      "imageHint": "mysterious door"
+    },
+    {
+      "id": "room-1",
+      "description": "A dusty old library with secrets on its shelves.",
+      "imageUrl": "https://picsum.photos/seed/library/600/400",
+      "imageHint": "library books"
+    },
+    {
+      "id": "room-2",
+      "description": "A futuristic science lab with glowing beakers.",
+      "imageUrl": "https://picsum.photos/seed/lab/600/400",
+      "imageHint": "science lab"
+    },
+    {
+      "id": "room-3",
+      "description": "An ancient tomb filled with hieroglyphs and sand.",
+      "imageUrl": "https://picsum.photos/seed/tomb/600/400",
+      "imageHint": "ancient tomb"
+    },
+    {
+      "id": "room-4",
+      "description": "A cozy, vintage detective's office on a rainy night.",
+      "imageUrl": "https://picsum.photos/seed/detective/600/400",
+      "imageHint": "detective office"
+    },
+     {
+      "id": "avatar-1",
+      "description": "User avatar 1",
+      "imageUrl": "https://picsum.photos/seed/avatar1/40/40",
+      "imageHint": "person face"
+    },
+    {
+      "id": "avatar-2",
+      "description": "User avatar 2",
+      "imageUrl": "https://picsum.photos/seed/avatar2/40/40",
+      "imageHint": "woman face"
+    }
+  ]
 }

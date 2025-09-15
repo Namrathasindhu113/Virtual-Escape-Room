@@ -1,0 +1,75 @@
+import type { Room } from './types';
+
+export const rooms: Room[] = [
+  {
+    id: 'the-scarlet-study',
+    title: 'The Scarlet Study',
+    creator: 'Agatha',
+    rating: 4.8,
+    playCount: 12500,
+    imageId: 'room-4',
+    description: 'A classic whodunnit. A renowned detective has been found murdered in his study. You have 60 minutes to solve the case before the trail goes cold. Search for clues, solve puzzles, and uncover the killer.',
+    comments: [
+      {
+        id: '1',
+        user: 'PuzzleMaster',
+        avatarId: 'avatar-1',
+        text: 'Amazing room! The puzzles were challenging but fair. Really felt like a detective.',
+        timestamp: '2 days ago',
+      },
+      {
+        id: '2',
+        user: 'EscapeArtist',
+        avatarId: 'avatar-2',
+        text: 'Loved the atmosphere. The ending was a total surprise!',
+        timestamp: '5 days ago',
+      },
+    ],
+  },
+  {
+    id: 'cyberscape-protocol',
+    title: 'Cyberscape Protocol',
+    creator: 'Glitch',
+    rating: 4.9,
+    playCount: 23000,
+    imageId: 'room-2',
+    description: 'In a dystopian future, a rogue AI threatens to plunge the world into chaos. You are a team of elite hackers tasked with infiltrating its server and initiating the Cyberscape Protocol. The clock is ticking.',
+    comments: [
+      {
+        id: '3',
+        user: 'CodeNinja',
+        avatarId: 'avatar-1',
+        text: 'Mind-blowing visuals and some really clever tech-based puzzles. A must-play!',
+        timestamp: '1 week ago',
+      },
+    ],
+  },
+  {
+    id: 'the-librarians-secret',
+    title: "The Librarian's Secret",
+    creator: 'Bookworm',
+    rating: 4.7,
+    playCount: 9800,
+    imageId: 'room-1',
+    description: "A reclusive librarian has hidden a priceless artifact somewhere in his vast collection. The library is scheduled for demolition in one hour. Find the artifact before it's lost forever.",
+    comments: [],
+  },
+  {
+    id: 'pharaohs-awakening',
+    title: "Pharaoh's Awakening",
+    creator: 'ExplorerX',
+    rating: 4.6,
+    playCount: 7600,
+    imageId: 'room-3',
+    description: 'You have disturbed the tomb of a long-forgotten pharaoh. The doors have sealed, and an ancient curse is awakening. Can you escape the tomb before you become a permanent resident?',
+    comments: [
+       {
+        id: '4',
+        user: 'HistoryBuff',
+        avatarId: 'avatar-2',
+        text: 'Incredibly immersive. The hieroglyph puzzles were my favorite part.',
+        timestamp: '3 weeks ago',
+      },
+    ],
+  },
+];
