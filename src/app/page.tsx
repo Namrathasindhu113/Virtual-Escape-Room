@@ -20,13 +20,13 @@ export default function Home() {
             priority
           />
         )}
-        <div className="absolute inset-0 bg-black/50 z-10" />
+        <div className="absolute inset-0 bg-black/60 z-10" />
         <div className="relative z-20 container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-headline font-bold mb-4 tracking-tight">
-            Craft Your Own Escape
+          <h1 className="text-6xl md:text-8xl font-headline font-bold mb-4 tracking-tight text-primary">
+            Room Forge
           </h1>
-          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8">
-            Unleash your creativity with Room Forge. Design, build, and share
+          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-foreground/80">
+            Unleash your creativity. Design, build, and share
             intricate escape rooms with a global community.
           </p>
           <Button asChild size="lg">

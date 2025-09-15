@@ -20,7 +20,7 @@ export function Leaderboard() {
   return (
     <section id="leaderboard" className="w-full bg-background py-12 md:py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-2">
+        <h2 className="text-5xl md:text-6xl font-headline font-bold text-center mb-2 text-primary">
           Featured Rooms
         </h2>
         <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-10">
@@ -33,7 +33,7 @@ export function Leaderboard() {
             );
             return (
               <Link href={`/rooms/${room.id}`} key={room.id} className="group">
-                <Card className="h-full flex flex-col overflow-hidden transition-all group-hover:shadow-lg group-hover:-translate-y-1">
+                <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 bg-card hover:bg-muted/50 hover:shadow-primary/20 hover:shadow-lg hover:-translate-y-2">
                   <CardHeader className="p-0">
                     <div className="relative h-48 w-full">
                       {roomImage && (
@@ -45,10 +45,11 @@ export function Leaderboard() {
                           data-ai-hint={roomImage.imageHint}
                         />
                       )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow p-4">
-                    <CardTitle className="text-lg font-headline mb-1 group-hover:text-primary transition-colors">
+                    <CardTitle className="text-2xl font-headline mb-1 text-primary group-hover:text-primary/90 transition-colors">
                       {room.title}
                     </CardTitle>
                     <CardDescription>by {room.creator}</CardDescription>

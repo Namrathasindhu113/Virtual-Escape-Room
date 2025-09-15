@@ -23,8 +23,9 @@ export function RoomDetails({ room }: RoomDetailsProps) {
             data-ai-hint={roomImage.imageHint}
           />
         )}
+         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
       </div>
-      <h1 className="text-3xl md:text-4xl font-headline font-bold mb-2">
+      <h1 className="text-5xl md:text-7xl font-headline font-bold mb-2 text-primary">
         {room.title}
       </h1>
       <div className="flex flex-wrap items-center gap-4 mb-4 text-muted-foreground">

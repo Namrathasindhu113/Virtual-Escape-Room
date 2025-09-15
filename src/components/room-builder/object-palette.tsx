@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Box, KeyRound, Lock, ScrollText } from "lucide-react";
+import { Box, KeyRound, Lock, Puzzle, ScrollText } from "lucide-react";
 
 const objects = [
   { name: "Key", icon: <KeyRound /> },
@@ -11,9 +11,12 @@ const objects = [
 
 export function ObjectPalette() {
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col bg-muted/20">
       <CardHeader>
-        <CardTitle className="font-headline">Objects & Puzzles</CardTitle>
+        <CardTitle className="font-headline flex items-center gap-2 text-2xl">
+          <Puzzle className="w-6 h-6 text-primary" />
+          Objects
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow overflow-y-auto">
         <div className="grid grid-cols-2 gap-4">
@@ -21,7 +24,7 @@ export function ObjectPalette() {
             <Button
               key={obj.name}
               variant="outline"
-              className="h-24 flex flex-col gap-2"
+              className="h-24 flex flex-col gap-2 text-lg hover:bg-muted/50"
               aria-label={`Add ${obj.name}`}
             >
               {obj.icon}
