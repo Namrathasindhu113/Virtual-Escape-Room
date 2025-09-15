@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { rooms } from '@/lib/placeholder-data';
+import { getRooms } from '@/lib/rooms-service';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import {
   Card,
@@ -10,12 +10,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Star, Users } from 'lucide-react';
 
-export function Leaderboard() {
-  // Sort rooms by play count for the leaderboard
-  const sortedRooms = [...rooms].sort((a, b) => b.playCount - a.playCount);
+export async function Leaderboard() {
+  const rooms = await getRooms();
 
   return (
     <section id="leaderboard" className="w-full bg-background py-12 md:py-20">
@@ -27,7 +25,7 @@ export function Leaderboard() {
           Discover the most popular and highest-rated rooms created by the community.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {sortedRooms.map((room) => {
+          {rooms.map((room) => {
             const roomImage = PlaceHolderImages.find(
               (img) => img.id === room.imageId
             );

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { rooms } from '@/lib/placeholder-data';
+import { getRoomById } from '@/lib/rooms-service';
 import { RoomDetails } from '@/components/room-player/room-details';
 import { PlayerInterface } from '@/components/room-player/player-interface';
 import { CommentsSection } from '@/components/room-player/comments-section';
@@ -10,8 +10,8 @@ type RoomPageProps = {
   };
 };
 
-export default function RoomPage({ params }: RoomPageProps) {
-  const room = rooms.find((r) => r.id === params.id);
+export default async function RoomPage({ params }: RoomPageProps) {
+  const room = await getRoomById(params.id);
 
   if (!room) {
     notFound();
