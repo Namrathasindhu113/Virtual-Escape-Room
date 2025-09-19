@@ -2,7 +2,7 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, getDocs, doc, getDoc, query, orderBy, limit } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, orderBy, limit, setDoc } from 'firebase/firestore';
 import type { Room, Comment } from './types';
 
 // NOTE: This is a placeholder for seeding data.
@@ -82,6 +82,22 @@ const seedData = [
 ];
 
 
+async function seedFirestore() {
+  console.log('No rooms found, attempting to seed data...');
+  try {
+    for (const roomData of seedData) {
+      await setDoc(doc(db, 'rooms', roomData.id), roomData);
+    }
+    console.log('Firestore seeded successfully.');
+    return seedData.sort((a, b) => b.playCount - a.playCount);
+  } catch (seedError) {
+    console.error("Error seeding Firestore: ", seedError);
+    // If seeding fails, return local data as a fallback
+    console.log("Falling back to local data due to seeding error.");
+    return seedData.sort((a,b) => b.playCount - a.playCount);
+  }
+}
+
 export async function getRooms(): Promise<Room[]> {
   try {
     const roomsCollection = collection(db, 'rooms');
@@ -89,21 +105,15 @@ export async function getRooms(): Promise<Room[]> {
     const roomSnapshot = await getDocs(q);
 
     if (roomSnapshot.empty) {
-      console.log('No rooms found, seeding data...');
-      // This is a simple way to seed data if the collection is empty.
-      // In a real app, this might be handled by a separate setup script.
-      const { setDoc } = await import('firebase/firestore');
-      for (const roomData of seedData) {
-        await setDoc(doc(db, 'rooms', roomData.id), roomData);
-      }
-      return seedData.sort((a,b) => b.playCount - a.playCount);
+      return await seedFirestore();
     }
     
     const rooms = roomSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
     return rooms;
   } catch (error) {
-    console.error("Error fetching rooms: ", error);
-    return [];
+    console.error("Error fetching rooms from Firestore: ", error);
+    console.log("Falling back to local placeholder data.");
+    return seedData.sort((a,b) => b.playCount - a.playCount);
   }
 }
 
@@ -115,11 +125,14 @@ export async function getRoomById(id: string): Promise<Room | null> {
         if (roomSnap.exists()) {
             return { id: roomSnap.id, ...roomSnap.data() } as Room;
         } else {
-            console.log("No such room!");
-            return null;
+            // Fallback to local data if not found in Firestore
+            const localRoom = seedData.find(room => room.id === id);
+            return localRoom || null;
         }
     } catch (error) {
-        console.error("Error fetching room: ", error);
-        return null;
+        console.error("Error fetching room from Firestore: ", error);
+        console.log("Falling back to local placeholder data for room ID:", id);
+        const localRoom = seedData.find(room => room.id === id);
+        return localRoom || null;
     }
 }
