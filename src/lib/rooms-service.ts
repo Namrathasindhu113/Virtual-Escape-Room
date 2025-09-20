@@ -54,6 +54,10 @@ const seedData: Room[] = [
         timestamp: '1 week ago',
       },
     ],
+    puzzle: {
+      description: "The AI's core is protected by a password. An encrypted message on a nearby terminal reads: 'To shut me down, simply find my oldest ancestor.'",
+      solution: "ada"
+    }
   },
   {
     id: 'the-librarians-secret',
@@ -64,6 +68,10 @@ const seedData: Room[] = [
     imageId: 'room-1',
     description: "A reclusive librarian has hidden a priceless artifact somewhere in his vast collection. The library is scheduled for demolition in one hour. Find the artifact before it's lost forever.",
     comments: [],
+    puzzle: {
+      description: "A note on the librarian's desk says: 'The Dewey Decimal points the way. Look for the tome on mythical creatures, page 242.'",
+      solution: "grimoire"
+    }
   },
   {
     id: 'pharaohs-awakening',
@@ -82,6 +90,10 @@ const seedData: Room[] = [
         timestamp: '3 weeks ago',
       },
     ],
+    puzzle: {
+      description: 'Four canopic jars stand before a sealed door. To proceed, arrange them in the order of the sons of Horus: human, baboon, jackal, falcon.',
+      solution: 'Imsety, Hapi, Duamutef, Qebehsenuef'
+    }
   },
 ];
 
@@ -90,9 +102,11 @@ async function seedFirestore() {
   console.log('No rooms found in Firestore, attempting to seed data...');
   try {
     for (const roomData of seedData) {
+      // Use setDoc with a specific ID to prevent creating duplicates on re-seed.
       await setDoc(doc(db, 'rooms', roomData.id), roomData);
     }
     console.log('Firestore seeded successfully.');
+    // Return sorted data after seeding
     return seedData.sort((a, b) => b.playCount - a.playCount);
   } catch (seedError) {
     console.error("Error seeding Firestore: ", seedError);
@@ -101,6 +115,7 @@ async function seedFirestore() {
     return seedData.sort((a,b) => b.playCount - a.playCount);
   }
 }
+
 
 let hasSeeded = false;
 
@@ -111,7 +126,7 @@ export async function getRooms(): Promise<Room[]> {
     const roomSnapshot = await getDocs(q);
 
     if (roomSnapshot.empty && !hasSeeded) {
-      hasSeeded = true; // Prevent re-seeding in the same session
+      hasSeeded = true; 
       return await seedFirestore();
     }
     
@@ -120,10 +135,10 @@ export async function getRooms(): Promise<Room[]> {
       return rooms;
     }
 
-    // If snapshot is empty and we have already tried to seed, fall back to local data.
     return seedData.sort((a,b) => b.playCount - a.playCount);
   } catch (error) {
     console.error("Error fetching rooms from Firestore, falling back to local data: ", error);
+    // This fallback is crucial for offline/dev environments.
     return seedData.sort((a,b) => b.playCount - a.playCount);
   }
 }
@@ -168,6 +183,11 @@ export async function publishRoom(
       playCount: 0,
       imageId: randomImageId,
       comments: [],
+      // Add a default puzzle to make it playable instantly
+      puzzle: {
+        description: "You've entered a new community-created room! The creator hasn't defined a specific puzzle yet. Can you guess the default solution?",
+        solution: "solution"
+      }
     };
 
     const docRef = await addDoc(roomsCollection, newRoom);
