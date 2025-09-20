@@ -2,8 +2,8 @@
 'use server';
 
 import { db } from '@/lib/firebase';
-import { collection, getDocs, doc, getDoc, query, orderBy, limit, setDoc } from 'firebase/firestore';
-import type { Room, Comment } from './types';
+import { collection, getDocs, doc, getDoc, query, orderBy, limit, setDoc, addDoc } from 'firebase/firestore';
+import type { Room, RoomObject } from './types';
 
 // NOTE: This is a placeholder for seeding data.
 // In a real application, you would have a separate script or admin interface to manage this.
@@ -145,4 +145,35 @@ export async function getRoomById(id: string): Promise<Room | null> {
         const localRoom = seedData.find(room => room.id === id);
         return localRoom || null;
     }
+}
+
+export async function publishRoom(
+  roomData: { title: string; description: string; items: RoomObject[] }
+): Promise<{ id: string }> {
+  try {
+    const roomsCollection = collection(db, 'rooms');
+    
+    const imageIds = ['room-1', 'room-2', 'room-3', 'room-4'];
+    const randomImageId = imageIds[Math.floor(Math.random() * imageIds.length)];
+
+    // Convert items to a plain object format for Firestore
+    const itemsForFirestore = roomData.items.map(item => ({...item}));
+    
+    const newRoom: Omit<Room, 'id'> = {
+      title: roomData.title,
+      description: roomData.description,
+      items: itemsForFirestore,
+      creator: 'Community Creator', // Placeholder
+      rating: 0,
+      playCount: 0,
+      imageId: randomImageId,
+      comments: [],
+    };
+
+    const docRef = await addDoc(roomsCollection, newRoom);
+    return { id: docRef.id };
+  } catch (error) {
+    console.error("Error publishing room: ", error);
+    throw new Error("Failed to publish room to Firestore.");
+  }
 }
