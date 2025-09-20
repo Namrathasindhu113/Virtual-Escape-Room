@@ -39,6 +39,7 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
       toast({
         title: "Congratulations!",
         description: "You've solved the puzzle and escaped the room!",
+        className: "bg-green-500/10 border-green-500 text-green-700",
       });
     } else {
       toast({
@@ -74,8 +75,8 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">The Final Challenge</CardTitle>
-        <CardDescription>{puzzle ? puzzle.description : 'Your escape begins now. Good luck.'}</CardDescription>
+        <CardTitle className="font-headline">{puzzle ? 'The Final Challenge' : 'No Puzzle'}</CardTitle>
+        <CardDescription>{puzzle ? puzzle.description : 'This room doesn\'t have a final puzzle defined yet.'}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {isSolved ? (
@@ -90,10 +91,11 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
                 <div className="flex-grow space-y-2">
                     <Input 
                         type="text" 
-                        placeholder="Enter code or answer..." 
+                        placeholder={puzzle ? 'Enter your solution...' : 'No solution needed'}
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
                         aria-label="Puzzle Answer"
+                        disabled={!puzzle}
                     />
                     {hint && (
                         <Alert variant="default" className="bg-muted/50">
@@ -103,7 +105,7 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
                         </Alert>
                     )}
                 </div>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={!puzzle}>Submit</Button>
                 {puzzle && (
                     <Button type="button" variant="outline" onClick={handleGetHint} disabled={isHintLoading}>
                         {isHintLoading ? <Loader2 className="animate-spin" /> : <Lightbulb />}

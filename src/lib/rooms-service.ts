@@ -49,7 +49,7 @@ const seedData: Room[] = [
         }
     ],
     puzzle: {
-        description: "Review the items in the room to find the 4-digit code for the detective's final report.",
+        description: "The detective's final report is locked away. Use the clues from his journal to find the 4-digit code.",
         solution: "1899"
     }
   },
@@ -87,7 +87,7 @@ const seedData: Room[] = [
         }
     ],
     puzzle: {
-      description: "Find the 3-letter password to shut down the AI's core.",
+      description: "The AI Core is protected by a password. Use the terminal messages to find the 3-letter name to shut it down.",
       solution: "ada"
     }
   },
@@ -117,7 +117,7 @@ const seedData: Room[] = [
         }
     ],
     puzzle: {
-      description: "Find the name of the book to unlock the artifact box.",
+      description: "The artifact is locked in a box. The librarian's note points to a specific book. What is its title?",
       solution: "grimoire"
     }
   },
@@ -155,7 +155,7 @@ const seedData: Room[] = [
         }
     ],
     puzzle: {
-      description: 'Find the correct sequence of names to open the sealed door.',
+      description: 'A stone door is sealed by a password. The Hieroglyphic Tablet mentions the four sons of Horus. What is the correct sequence of their names?',
       solution: 'ImsetyHapiDuamutefQebehsenuef'
     }
   },
