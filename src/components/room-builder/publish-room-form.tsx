@@ -23,7 +23,6 @@ import { useToast } from "@/hooks/use-toast";
 import { publishRoom } from "@/lib/rooms-service";
 import { Loader2, UploadCloud } from "lucide-react";
 import { useBuilder } from "./builder-context";
-import { useAuth } from "@/hooks/use-auth";
 
 const formSchema = z.object({
   title: z.string().min(5, {
@@ -42,7 +41,6 @@ export function PublishRoomForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const { toast } = useToast();
   const { items } = useBuilder();
-  const { user } = useAuth();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -63,19 +61,9 @@ export function PublishRoomForm() {
       return;
     }
     
-    if (!user) {
-        toast({
-            variant: "destructive",
-            title: "Not Authenticated",
-            description: "You must be logged in to publish a room.",
-        });
-        return;
-    }
-
     setIsLoading(true);
     try {
-      const creatorName = user.displayName || user.email || 'Anonymous';
-      const result = await publishRoom({ ...values, items, creator: creatorName });
+      const result = await publishRoom({ ...values, items, creator: 'Community Builder' });
       toast({
         title: "Room Published!",
         description: "Your escape room is now live for others to play.",
