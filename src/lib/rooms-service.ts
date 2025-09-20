@@ -227,7 +227,7 @@ export async function getRoomById(id: string): Promise<Room | null> {
 }
 
 export async function publishRoom(
-  roomData: { title: string; description: string; items: RoomObject[] }
+  roomData: { title: string; description: string; items: RoomObject[], creator: string }
 ): Promise<{ id: string }> {
   try {
     const roomsCollection = collection(db, 'rooms');
@@ -242,7 +242,7 @@ export async function publishRoom(
       title: roomData.title,
       description: roomData.description,
       items: itemsForFirestore,
-      creator: 'Community Creator', // Placeholder
+      creator: roomData.creator,
       rating: 0,
       playCount: 0,
       imageId: randomImageId,
