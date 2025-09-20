@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -23,15 +24,19 @@ import { Loader2, Wand2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const formSchema = z.object({
-  roomDescription: z.string().min(20, {
-    message: "Room description must be at least 20 characters.",
+  roomDescription: z.string().min(10, {
+    message: "Room description must be at least 10 characters.",
   }),
-  puzzleDescription: z.string().min(20, {
-    message: "Puzzle description must be at least 20 characters.",
+  puzzleDescription: z.string().min(10, {
+    message: "Puzzle description must be at least 10 characters.",
   }),
 });
 
-export function AIClueGenerator() {
+type AIClueGeneratorProps = {
+    puzzleDescription: string;
+}
+
+export function AIClueGenerator({ puzzleDescription }: AIClueGeneratorProps) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [generatedClue, setGeneratedClue] = React.useState("");
   const { toast } = useToast();
@@ -43,6 +48,11 @@ export function AIClueGenerator() {
       puzzleDescription: "",
     },
   });
+
+  React.useEffect(() => {
+    form.setValue("puzzleDescription", puzzleDescription);
+  }, [puzzleDescription, form]);
+
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
@@ -74,7 +84,7 @@ export function AIClueGenerator() {
                 AI Clue Generator
             </CardTitle>
             <CardDescription>
-                Stuck on a hint? Describe the puzzle and let AI create a clever clue.
+                Stuck on a hint? Describe the room and the selected object to create a clever clue.
             </CardDescription>
         </CardHeader>
       <CardContent>
@@ -101,18 +111,20 @@ export function AIClueGenerator() {
               name="puzzleDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Puzzle Description</FormLabel>
+                  <FormLabel>Object Description</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="e.g., The globe has symbols for continents. The desk has a 4-digit combination lock."
                       {...field}
+                      readOnly
+                      className="bg-background/50"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <Button type="submit" disabled={isLoading || !form.getValues().puzzleDescription} className="w-full">
               {isLoading ? (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               ) : (
