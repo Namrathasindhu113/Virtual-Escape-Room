@@ -9,7 +9,9 @@ export default function BuildPage() {
     <BuilderProvider>
       <div className="h-[calc(100vh-4rem)] bg-muted/40">
         <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr_350px] h-full gap-4 p-4">
-          <ObjectPalette />
+          <div className="flex flex-col gap-4">
+            <ObjectPalette />
+          </div>
           <BuilderCanvas />
           <PropertiesPanel />
         </div>

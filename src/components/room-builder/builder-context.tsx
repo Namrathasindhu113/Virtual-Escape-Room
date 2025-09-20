@@ -2,6 +2,7 @@
 "use client";
 
 import { RoomObject, RoomObjectType } from "@/lib/types";
+import { RoomTemplate } from "@/lib/room-templates";
 import React, { createContext, useContext, useState, useRef, useCallback } from "react";
 
 type BuilderContextType = {
@@ -11,6 +12,7 @@ type BuilderContextType = {
   selectedItemId: string | null;
   setSelectedItemId: (id: string | null) => void;
   selectedItem: RoomObject | null;
+  loadTemplate: (template: RoomTemplate) => void;
   
   // Drag and Drop state
   draggingItemId: string | null;
@@ -54,6 +56,15 @@ export const BuilderProvider = ({ children }: { children: React.ReactNode }) => 
       prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
     );
   }, []);
+
+  const loadTemplate = (template: RoomTemplate) => {
+    const templateItems = template.items.map((item, index) => ({
+        ...item,
+        id: `${item.type}-${Date.now()}-${index}`,
+    }));
+    setItems(templateItems);
+    setSelectedItemId(null);
+  }
 
   const handleItemMouseDown = (e: React.MouseEvent, itemId: string) => {
     const item = items.find(i => i.id === itemId);
@@ -99,6 +110,7 @@ export const BuilderProvider = ({ children }: { children: React.ReactNode }) => 
         selectedItemId,
         setSelectedItemId,
         selectedItem,
+        loadTemplate,
         draggingItemId,
         handleItemMouseDown,
         handleCanvasMouseMove,
