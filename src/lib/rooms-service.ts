@@ -32,8 +32,24 @@ const seedData: Room[] = [
         timestamp: '5 days ago',
       },
     ],
+    items: [
+        {
+            id: 'item-1',
+            type: 'note',
+            name: 'Detective\'s Journal',
+            description: "The detective's journal has a final, cryptic entry: 'The key is the year the master of suspense was born.'",
+            position: { x: 50, y: 50 }
+        },
+        {
+            id: 'item-2',
+            type: 'lock',
+            name: 'Final Report Lock',
+            description: "A 4-digit combination lock secures the detective's final report, which surely names the killer.",
+            position: { x: 200, y: 50 }
+        }
+    ],
     puzzle: {
-        description: "The detective's journal has a final, cryptic entry: 'The key is the year the master of suspense was born.' A 4-digit lock secures his final report.",
+        description: "Review the items in the room to find the 4-digit code for the detective's final report.",
         solution: "1899"
     }
   },
@@ -54,8 +70,24 @@ const seedData: Room[] = [
         timestamp: '1 week ago',
       },
     ],
+    items: [
+        {
+            id: 'item-3',
+            type: 'note',
+            name: 'Encrypted Message',
+            description: "An encrypted message on a nearby terminal flickers with text: 'To shut me down, simply find my oldest ancestor.'",
+            position: { x: 50, y: 50 }
+        },
+        {
+            id: 'item-4',
+            type: 'puzzle-box',
+            name: 'AI Core',
+            description: "The AI's core is protected by a 3-letter password. A faded post-it note on the side of the machine mentions 'The Enchantress of Numbers'.",
+            position: { x: 200, y: 50 }
+        }
+    ],
     puzzle: {
-      description: "The AI's core is protected by a password. An encrypted message on a nearby terminal reads: 'To shut me down, simply find my oldest ancestor.'",
+      description: "Find the 3-letter password to shut down the AI's core.",
       solution: "ada"
     }
   },
@@ -68,8 +100,24 @@ const seedData: Room[] = [
     imageId: 'room-1',
     description: "A reclusive librarian has hidden a priceless artifact somewhere in his vast collection. The library is scheduled for demolition in one hour. Find the artifact before it's lost forever.",
     comments: [],
+    items: [
+        {
+            id: 'item-5',
+            type: 'note',
+            name: 'Librarian\'s Desk Note',
+            description: "A note on the librarian's desk says: 'The Dewey Decimal points the way. Look for the tome on mythical creatures, page 242. The title of the book is the answer.'",
+            position: { x: 50, y: 50 }
+        },
+        {
+            id: 'item-6',
+            type: 'puzzle-box',
+            name: 'Artifact Box',
+            description: 'A locked box that holds the artifact. It requires a single word as a password.',
+            position: { x: 200, y: 50 }
+        }
+    ],
     puzzle: {
-      description: "A note on the librarian's desk says: 'The Dewey Decimal points the way. Look for the tome on mythical creatures, page 242.'",
+      description: "Find the name of the book to unlock the artifact box.",
       solution: "grimoire"
     }
   },
@@ -90,8 +138,24 @@ const seedData: Room[] = [
         timestamp: '3 weeks ago',
       },
     ],
+    items: [
+        {
+            id: 'item-7',
+            type: 'note',
+            name: 'Hieroglyphic Tablet',
+            description: 'A stone tablet shows four canopic jars and says: "To proceed, arrange them in the order of the sons of Horus: the human-headed one, the baboon-headed one, the jackal-headed one, and the falcon-headed one. Speak their names as one." ',
+            position: { x: 50, y: 50 }
+        },
+        {
+            id: 'item-8',
+            type: 'lock',
+            name: 'Sealed Door',
+            description: 'A massive stone door sealed by ancient magic. It requires a long password, seemingly a list of names.',
+            position: { x: 200, y: 50 }
+        }
+    ],
     puzzle: {
-      description: 'Four canopic jars stand before a sealed door. To proceed, arrange them in the order of the sons of Horus: human, baboon, jackal, falcon.',
+      description: 'Find the correct sequence of names to open the sealed door.',
       solution: 'Imsety, Hapi, Duamutef, Qebehsenuef'
     }
   },
