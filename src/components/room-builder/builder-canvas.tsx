@@ -7,7 +7,7 @@ import { useBuilder } from "./builder-context";
 import { CanvasItem } from "./canvas-item";
 
 export function BuilderCanvas() {
-  const { items, setSelectedItemId } = useBuilder();
+  const { items, setSelectedItemId, handleCanvasMouseMove, handleCanvasMouseUp, draggingItemId } = useBuilder();
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // Deselect if clicking on the canvas background
@@ -18,8 +18,11 @@ export function BuilderCanvas() {
 
   return (
     <Card
-      className="h-full bg-muted/20 relative"
+      className="h-full bg-muted/20 relative overflow-hidden"
       onClick={handleCanvasClick}
+      onMouseMove={handleCanvasMouseMove}
+      onMouseUp={handleCanvasMouseUp}
+      onMouseLeave={handleCanvasMouseUp} // Stop dragging if mouse leaves canvas
     >
       <CardContent className="h-full p-0">
         {items.length === 0 ? (
