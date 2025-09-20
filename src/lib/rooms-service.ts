@@ -1,7 +1,7 @@
 
 'use server';
 
-import { db } from '@/lib/firebase';
+import { db } from '@/lib/auth-service';
 import { collection, getDocs, doc, getDoc, query, orderBy, limit, setDoc, addDoc } from 'firebase/firestore';
 import type { Room, RoomObject } from './types';
 
