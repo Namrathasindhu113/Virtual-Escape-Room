@@ -156,11 +156,13 @@ const seedData: Room[] = [
     ],
     puzzle: {
       description: 'Find the correct sequence of names to open the sealed door.',
-      solution: 'Imsety, Hapi, Duamutef, Qebehsenuef'
+      solution: 'ImsetyHapiDuamutefQebehsenuef'
     }
   },
 ];
 
+
+let hasSeeded = false;
 
 async function seedFirestore() {
   console.log('No rooms found in Firestore, attempting to seed data...');
@@ -180,8 +182,6 @@ async function seedFirestore() {
   }
 }
 
-
-let hasSeeded = false;
 
 export async function getRooms(): Promise<Room[]> {
   try {

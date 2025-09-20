@@ -33,7 +33,7 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
         return;
     }
 
-    if (answer.toLowerCase() === puzzle.solution.toLowerCase()) {
+    if (answer.toLowerCase().replace(/\s/g, '') === puzzle.solution.toLowerCase().replace(/\s/g, '')) {
       setIsSolved(true);
       toast({
         title: "Congratulations!",
@@ -73,7 +73,7 @@ export function PlayerInterface({ room, puzzle }: PlayerInterfaceProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="font-headline">Enter the Room</CardTitle>
+        <CardTitle className="font-headline">The Final Challenge</CardTitle>
         <CardDescription>{puzzle ? puzzle.description : 'Your escape begins now. Good luck.'}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
