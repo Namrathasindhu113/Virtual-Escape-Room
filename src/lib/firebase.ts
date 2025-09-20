@@ -1,11 +1,10 @@
 
 // Import the functions you need from the SDKs you need
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp, FirebaseApp } from "firebase/app";
+import { getFirestore, Firestore } from "firebase/firestore";
+import { getAuth, Auth } from "firebase/auth";
 
 // Your web app's Firebase configuration
-// This is intentionally hardcoded to resolve persistent configuration errors.
 const firebaseConfig = {
   apiKey: "AIzaSyA1upQpYN0dRtoterK2b60PRZu00idto7w",
   authDomain: "studio-7794488728-5e169.firebaseapp.com",
@@ -16,9 +15,19 @@ const firebaseConfig = {
   measurementId: ""
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
-const auth = getAuth(app);
+// Initialize Firebase for Singleton Pattern
+let app: FirebaseApp;
+let auth: Auth;
+let db: Firestore;
+
+if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApp();
+}
+
+auth = getAuth(app);
+db = getFirestore(app);
+
 
 export { app, db, auth };
