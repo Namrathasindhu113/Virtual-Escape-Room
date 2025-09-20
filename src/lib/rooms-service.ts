@@ -7,7 +7,7 @@ import type { Room, Comment } from './types';
 
 // NOTE: This is a placeholder for seeding data.
 // In a real application, you would have a separate script or admin interface to manage this.
-const seedData = [
+const seedData: Room[] = [
   {
     id: 'the-scarlet-study',
     title: 'The Scarlet Study',
@@ -32,6 +32,10 @@ const seedData = [
         timestamp: '5 days ago',
       },
     ],
+    puzzle: {
+        description: "The detective's journal has a final, cryptic entry: 'The key is the year the master of suspense was born.' A 4-digit lock secures his final report.",
+        solution: "1899"
+    }
   },
   {
     id: 'cyberscape-protocol',

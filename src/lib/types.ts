@@ -6,6 +6,11 @@ export type Comment = {
   timestamp: string;
 };
 
+export type Puzzle = {
+  description: string;
+  solution: string;
+};
+
 export type Room = {
   id: string;
   title: string;
@@ -15,4 +20,5 @@ export type Room = {
   imageId: string;
   description: string;
   comments: Comment[];
+  puzzle?: Puzzle;
 };
