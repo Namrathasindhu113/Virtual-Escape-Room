@@ -83,7 +83,7 @@ const seedData = [
 
 
 async function seedFirestore() {
-  console.log('No rooms found, attempting to seed data...');
+  console.log('No rooms found in Firestore, attempting to seed data...');
   try {
     for (const roomData of seedData) {
       await setDoc(doc(db, 'rooms', roomData.id), roomData);
@@ -98,21 +98,28 @@ async function seedFirestore() {
   }
 }
 
+let hasSeeded = false;
+
 export async function getRooms(): Promise<Room[]> {
   try {
     const roomsCollection = collection(db, 'rooms');
     const q = query(roomsCollection, orderBy('playCount', 'desc'));
     const roomSnapshot = await getDocs(q);
 
-    if (roomSnapshot.empty) {
+    if (roomSnapshot.empty && !hasSeeded) {
+      hasSeeded = true; // Prevent re-seeding in the same session
       return await seedFirestore();
     }
     
-    const rooms = roomSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
-    return rooms;
+    if (!roomSnapshot.empty) {
+      const rooms = roomSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Room));
+      return rooms;
+    }
+
+    // If snapshot is empty and we have already tried to seed, fall back to local data.
+    return seedData.sort((a,b) => b.playCount - a.playCount);
   } catch (error) {
-    console.error("Error fetching rooms from Firestore: ", error);
-    console.log("Falling back to local placeholder data.");
+    console.error("Error fetching rooms from Firestore, falling back to local data: ", error);
     return seedData.sort((a,b) => b.playCount - a.playCount);
   }
 }
@@ -125,13 +132,12 @@ export async function getRoomById(id: string): Promise<Room | null> {
         if (roomSnap.exists()) {
             return { id: roomSnap.id, ...roomSnap.data() } as Room;
         } else {
-            // Fallback to local data if not found in Firestore
+            console.warn(`Room with id ${id} not found in Firestore. Checking local data.`);
             const localRoom = seedData.find(room => room.id === id);
             return localRoom || null;
         }
     } catch (error) {
-        console.error("Error fetching room from Firestore: ", error);
-        console.log("Falling back to local placeholder data for room ID:", id);
+        console.error(`Error fetching room ${id} from Firestore, falling back to local data:`, error);
         const localRoom = seedData.find(room => room.id === id);
         return localRoom || null;
     }
